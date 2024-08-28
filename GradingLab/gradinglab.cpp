@@ -9,6 +9,7 @@ void addGrade();
 void removeGrade();
 void showGrades();
 void showFinalGrade(bool dropLowest);
+int getNumInput();
 
 
 int main() {
@@ -16,7 +17,8 @@ int main() {
     while (selected != 6) {
         cout << endl << "1. Enter grade" << endl << "2. Remove grade" << endl << "3. Show grades" << endl << "4. Show final grade" << endl << "5. Show final grade, drop lowest" << endl << "6. Quit" << endl;
 
-        cin >> selected;
+        cout << "Select an option: ";
+        selected = getNumInput();
         cout << endl;
 
         switch (selected) {
@@ -44,17 +46,35 @@ int main() {
     }
 }
 
+int getNumInput() {
+    int num = -1;
+    do {
+        string input;
+        cin >> input;
+        try {
+            num = stoi(input);
+        }
+        catch (exception e) {
+            cout << "Invalid input. Please enter a number: ";
+            continue;
+        }
+    } while (num == -1);
+    return num;
+}
+
 void addGrade() {
-    int grade;
+    int grade = -1;
     cout << "Enter grade: ";
-    cin >> grade;
+    do {
+    grade = getNumInput();
+    } while (grade > 100 || grade < 0);
     grades.push_back(grade);
 }
 
 void removeGrade() {
-    int grade;
+    int grade = -1;
     cout << endl << "Enter grade to remove: ";
-    cin >> grade;
+    grade = getNumInput();
 
     for (int i = 0; i < grades.size(); i++) {
         if (grades[i] == grade) {
@@ -69,18 +89,19 @@ void removeGrade() {
 void showGrades() {
     cout << "Grades: " << endl;
     for (int i = 0; i < grades.size(); i++) cout << grades[i] << endl;
-    
-    cout << endl << "Press Enter to continue...";
-    cin.get();
+    cout << endl;
 }
 
 void showFinalGrade(bool dropLowest) {
     int sum = 0;
-    if (dropLowest) {
+
+    if (dropLowest && grades.size() > 0) {
         int lowest = grades[0];
         for (int i = 1; i < grades.size(); i++) {
             if (grades[i] < lowest) lowest = grades[i];
         }
+
+        cout << lowest << endl;
         for (int i = 0; i < grades.size(); i++) sum += grades[i];
 
         cout << "Final grade: " << (sum - lowest) / (grades.size() - 1) << endl;
@@ -90,4 +111,6 @@ void showFinalGrade(bool dropLowest) {
         
         cout << "Final grade: " << sum / grades.size() << endl;
     }
+
+    cout << endl;
 }
