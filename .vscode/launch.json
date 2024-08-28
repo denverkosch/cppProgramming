@@ -6,8 +6,21 @@
       "type": "lldb",
       "request": "launch",
       "args": [],
-      "cwd": ".",
-      "program": "build/Debug/outDebug"
+      "cwd": "/Users/denverkosch/Library/CloudStorage/OneDrive-muskingum.edu/4. Senior Year/C++ Programming/GradingLab",
+      "program": "/Users/denverkosch/Library/CloudStorage/OneDrive-muskingum.edu/4. Senior Year/C++ Programming/GradingLab/build/Debug/outDebug"
+    },
+    {
+      "name": "C/C++: g++ build and debug active file",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${fileDirname}/${fileBasenameNoExtension}",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${fileDirname}",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "lldb",
+      "preLaunchTask": "C/C++: g++ build active file"
     }
   ]
 }
