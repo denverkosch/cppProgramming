@@ -6,8 +6,8 @@
       "type": "lldb",
       "request": "launch",
       "args": [],
-      "cwd": "/Users/denverkosch/Library/CloudStorage/OneDrive-muskingum.edu/4. Senior Year/C++ Programming/GradingLab",
-      "program": "/Users/denverkosch/Library/CloudStorage/OneDrive-muskingum.edu/4. Senior Year/C++ Programming/GradingLab/build/Debug/outDebug"
+      "cwd": "/Users/denverkosch/Library/CloudStorage/OneDrive-muskingum.edu/4. Senior Year/C++ Programming/SameGame",
+      "program": "/Users/denverkosch/Library/CloudStorage/OneDrive-muskingum.edu/4. Senior Year/C++ Programming/SameGame/build/Debug/outDebug"
     },
     {
       "name": "C/C++: g++ build and debug active file",
