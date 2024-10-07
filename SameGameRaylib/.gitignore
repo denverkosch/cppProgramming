@@ -1,0 +1,8 @@
+_bin
+.vs
+*premake*
+
+raylib-master
+resources
+_lib
+README.md

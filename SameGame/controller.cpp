@@ -8,8 +8,8 @@ using namespace std;
 
 
 Controller::Controller(Board& b, View& v) {
-    this->board = &b;
-    this->view = &v;
+    board = &b;
+    view = &v;
 }
 
 void Controller::run() {
