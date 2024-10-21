@@ -108,7 +108,13 @@
     "unordered_map": "cpp",
     "variant": "cpp",
     "vector": "cpp",
-    "algorithm": "cpp"
+    "algorithm": "cpp",
+    "map": "cpp",
+    "stdio.h": "c",
+    "raylib.h": "c",
+    "config.h": "c",
+    "stdlib.h": "c",
+    "math.h": "c"
   },
   "C_Cpp.errorSquiggles": "disabled"
 }
