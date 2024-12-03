@@ -5,6 +5,8 @@
 #include "entitydata.h"
 #include <stdbool.h>
 
+using namespace std;
+
 
 DenverBot::DenverBot() {
 	srand(time(0));
@@ -23,13 +25,17 @@ void DenverBot::takeTurn() {
 	}
 
 	enemyFound = (type == TankA || type == TankB || type == TankC || type == TankD) ? true : false;
+	cout << "Enemy found: " << enemyFound << endl;
 	tracking = !enemyFound && distToEnemy > 0 ? true : false;
+	if (enemyFound) hunt(data);
+	if (tracking) pursue();
+
 
 	if (!enemyFound && !tracking) {
 		switch (movementStage) {
 			case Scan:
 				if (scanProgress == 0) {
-					if (isWall(type)) {
+					if (isWall(type) && (abs(data.getRow() - getRow()) == 1 || abs(data.getCol() - getCol()) == 1)) {
 						movementStage = FirstTurn;
 						break;
 					}
@@ -91,35 +97,6 @@ void DenverBot::takeTurn() {
 				break;
 		}
 	}
-	else if (enemyFound) {
-		enemyRotation = data.getRotation();
-		distToEnemy = findDistance(data);
-		if (canFire() && (distToEnemy > 1 || getHealth() > 20)) fire();
-		else move();
-		if (distToEnemy == 1) turnLeft();
-	}
-	else if (tracking) {
-		if (distToEnemy == 0) {
-			if (enemyRotation == 0) turnRight();
-			else turnLeft();
-
-			enemyFound = enemyAhead();
-			if (enemyFound) distToEnemy = findDistance(scan());
-		}
-		else if (distToEnemy == 2) {
-			if (enemyRotation == 0) {
-				if (rand() % 2 == 0) turnRight();
-				else turnLeft();
-			}
-			else {
-				if (rand() % 2 == 0) turnLeft();
-				else turnRight();
-			}
-		}
-		move();
-		if (distToEnemy > 0) distToEnemy--;
-		if (distToEnemy == 0) tracking = false;
-	}
 	else movementStage = Scan;
 	
 }
@@ -141,4 +118,35 @@ int DenverBot::findDistance(EntityData data) {
 	int rowDiff = abs(data.getRow() - getRow());
 	int colDiff = abs(data.getCol() - getCol());
 	return rowDiff ? rowDiff : colDiff;
+}
+
+void DenverBot::hunt(EntityData data) {
+	enemyRotation = data.getRotation();
+	distToEnemy = findDistance(data);
+	if (canFire() && (distToEnemy > 1 || getHealth() > 20)) fire();
+	else move();
+	if (distToEnemy == 1 && getHealth() <= 40) turnLeft();
+}
+
+void DenverBot::pursue() {
+	if (distToEnemy == 0) {
+		if (enemyRotation == 0) turnRight();
+		else turnLeft();
+
+		enemyFound = enemyAhead();
+		if (enemyFound) distToEnemy = findDistance(scan());
+	}
+	else if (distToEnemy == 2) {
+		if (enemyRotation == 0) {
+			if (rand() % 2 == 0) turnRight();
+			else turnLeft();
+		}
+		else {
+			if (rand() % 2 == 0) turnLeft();
+			else turnRight();
+		}
+	}
+	move();
+	if (distToEnemy > 0) distToEnemy--;
+	if (distToEnemy == 0) tracking = false;
 }

@@ -36,6 +36,8 @@ public:
 	void takeTurn();
 	bool enemyAhead();
 	int findDistance(EntityData data);
+	void hunt(EntityData data);
+	void pursue();
 };
 
 #endif
