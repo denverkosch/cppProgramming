@@ -116,5 +116,6 @@
     "stdlib.h": "c",
     "math.h": "c"
   },
-  "C_Cpp.errorSquiggles": "disabled"
+  "C_Cpp.errorSquiggles": "disabled",
+  "cmake.sourceDirectory": "/Users/denverkosch/Library/CloudStorage/OneDrive-muskingum.edu/4. Senior Year/C++ Programming/SameGameRaylib/raylib-master/src"
 }

@@ -27,7 +27,7 @@ endif
 ifeq ($(origin AR), default)
   AR = ar
 endif
-INCLUDES += -I../game/include -I../game -I../game/src -I../game/src/models -I../game/src/views -I../raylib-master/src -I../raylib-master/src/external -I../raylib-master/src/external/glfw/include
+INCLUDES += -I../game/include -I../game -I../game/src -I../game/src/models -I../game/src/views -I../game/src/models/cppFiles -I../game/src/models/hFiles -I../game/src/views/cppFiles -I../game/src/views/hFiles -I../raylib-master/src -I../raylib-master/src/external -I../raylib-master/src/external/glfw/include
 FORCE_INCLUDE +=
 ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
 ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
@@ -235,22 +235,22 @@ endif
 $(OBJDIR)/controller.o: ../game/src/controller.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/entity.o: ../game/src/models/entity.cpp
+$(OBJDIR)/entity.o: ../game/src/models/cppFiles/entity.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/playerEntity.o: ../game/src/models/playerEntity.cpp
+$(OBJDIR)/playerEntity.o: ../game/src/models/cppFiles/playerEntity.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/pubsub.o: ../game/src/models/pubsub.cpp
+$(OBJDIR)/pubsub.o: ../game/src/models/cppFiles/pubsub.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/world.o: ../game/src/models/world.cpp
+$(OBJDIR)/world.o: ../game/src/models/cppFiles/world.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/entityView.o: ../game/src/views/entityView.cpp
+$(OBJDIR)/entityView.o: ../game/src/views/cppFiles/entityView.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/textures.o: ../game/src/views/textures.cpp
+$(OBJDIR)/textures.o: ../game/src/views/cppFiles/textures.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 

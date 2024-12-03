@@ -1,8 +1,9 @@
 obj/x64/Debug/TileGame/playerEntity.o: \
-  ../game/src/models/playerEntity.cpp ../game/src/models/playerEntity.h \
-  ../game/src/models/entity.h ../game/src/models/pubsub.h \
+  ../game/src/models/cppFiles/playerEntity.cpp \
+  ../game/src/models/hFiles/playerEntity.h \
+  ../game/src/models/hFiles/entity.h ../game/src/models/hFiles/pubsub.h \
   ../raylib-master/src/raylib.h
-../game/src/models/playerEntity.h:
-../game/src/models/entity.h:
-../game/src/models/pubsub.h:
+../game/src/models/hFiles/playerEntity.h:
+../game/src/models/hFiles/entity.h:
+../game/src/models/hFiles/pubsub.h:
 ../raylib-master/src/raylib.h:
