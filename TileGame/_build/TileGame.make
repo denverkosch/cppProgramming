@@ -123,6 +123,8 @@ GENERATED += $(OBJDIR)/entityView.o
 GENERATED += $(OBJDIR)/playerEntity.o
 GENERATED += $(OBJDIR)/pubsub.o
 GENERATED += $(OBJDIR)/textures.o
+GENERATED += $(OBJDIR)/tile.o
+GENERATED += $(OBJDIR)/tileView.o
 GENERATED += $(OBJDIR)/world.o
 OBJECTS += $(OBJDIR)/controller.o
 OBJECTS += $(OBJDIR)/entity.o
@@ -130,6 +132,8 @@ OBJECTS += $(OBJDIR)/entityView.o
 OBJECTS += $(OBJDIR)/playerEntity.o
 OBJECTS += $(OBJDIR)/pubsub.o
 OBJECTS += $(OBJDIR)/textures.o
+OBJECTS += $(OBJDIR)/tile.o
+OBJECTS += $(OBJDIR)/tileView.o
 OBJECTS += $(OBJDIR)/world.o
 
 # Rules
@@ -244,6 +248,9 @@ $(OBJDIR)/playerEntity.o: ../game/src/models/cppFiles/playerEntity.cpp
 $(OBJDIR)/pubsub.o: ../game/src/models/cppFiles/pubsub.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/tile.o: ../game/src/models/cppFiles/tile.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/world.o: ../game/src/models/cppFiles/world.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
@@ -251,6 +258,9 @@ $(OBJDIR)/entityView.o: ../game/src/views/cppFiles/entityView.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/textures.o: ../game/src/views/cppFiles/textures.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/tileView.o: ../game/src/views/cppFiles/tileView.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 

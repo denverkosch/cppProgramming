@@ -1,10 +1,15 @@
 #include "raylib.h"
 #include <math.h>
+#include <iostream>
 #include "controller.h"
 #include "world.h"
 #include "entity.h"
 #include "entityView.h"
 #include "playerEntity.h"
+#include "tile.h"
+#include "tileView.h"
+
+using namespace std;
 
 
 int viewportWidth = 1440;
@@ -33,9 +38,9 @@ void Controller::receiveMessage(string channel, string message, void* data) {
         }
     }
 
-    if (channel == "player" && message == "location") {
-        Vector2* position = (Vector2*)data;
-        viewportX = position->x - viewportWidth / 2;
+    if (channel == "terrain" && message == "new") {
+        TileView* view = new TileView((Tile *) data);
+        views.push_back(view);
     }
 }
 
@@ -59,13 +64,20 @@ void Controller::gameLoop() {
 
     PubSub::subscribe("entity", this);
     PubSub::subscribe("player", this);
+    PubSub::subscribe("terrain", this);
 
-    float x = 320;
-    float y = 740;
+    float x = 150;
+    float y = 872;
     PlayerEntity* player = new PlayerEntity(x, y, 128, 128, FIGHTER);
     world.addPlayer(player);
 
     PubSub::publish("entity", "new", player);
+
+    for (int i = 0; i < 50; i++) {
+        Tile* tile = new Tile(i * 32.0, 1000.0, 32, 32, FLOOR, false);
+        world.addTile(tile);
+        PubSub::publish("terrain", "new", tile);
+    }
 
     SetTargetFPS(60);
 
@@ -74,9 +86,20 @@ void Controller::gameLoop() {
 
         // Handle user input
         for (auto &i : keyMapping) {
-            if (IsKeyPressed(i.first))
+            if (IsKeyDown(i.first) && i.first != KEY_W)
             {
                 Action action = i.second;
+                PubSub::publish("action", "player", &action);
+            }
+            else if (i.first == KEY_W && IsKeyPressed(i.first))
+            {
+                Action action = JUMP;
+                PubSub::publish("action", "player", &action);
+            }
+            else
+            if (IsKeyReleased(i.first))
+            {
+                Action action = IDLE;
                 PubSub::publish("action", "player", &action);
             }
         }
@@ -88,9 +111,21 @@ void Controller::gameLoop() {
         ClearBackground(RAYWHITE);
 
         // Draw the views
-        for (EntityView *view : views)
-            view->draw(viewportX, viewportY, viewportDrawX, viewportDrawY, viewportWidth, viewportHeight);
 
+        vector<Tile*> tiles = world.getTiles();
+        for (EntityView *view : views) {
+            bool isTile = false;
+            //Check if view belongs to one of the tiles
+            for (Tile* tile : tiles) {
+                if (view->isViewFor(tile)) {
+                    TileView* tView = (TileView*)view;
+                    tView->draw(viewportX, viewportY, viewportDrawX, viewportDrawY, viewportWidth, viewportHeight);
+                    isTile = true;
+                }
+            }
+            if (!isTile) view->draw(viewportX, viewportY, viewportDrawX, viewportDrawY, viewportWidth, viewportHeight);
+        }
+        
 
         EndDrawing();
     }

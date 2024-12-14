@@ -92,7 +92,7 @@ void Entity::setAction(Action action) {
 void Entity::tick() {
     if (moving) x += (facing == RIGHT) ? 1: -1;
     if (falling) y += 1;
-    
+    if (!moving && !falling) action = IDLE;
 }
 
 void Entity::addCollision(Entity* entity) {

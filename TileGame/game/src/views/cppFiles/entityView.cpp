@@ -18,7 +18,7 @@ map<EntitySpecific, SpriteInfo> spriteMapping = {
             {MV_RIGHT, {2, 8}},
             {JUMP, {3, 10}},
             {ATTACK1, {4, 4}},
-            {ATTACK2, {5, 4}},
+            {ATTACK2, {5, 3}},
             {ATTACK3, {6, 4}},
             {BLOCK, {7, 2}},
             {DIE, {9, 3}}
@@ -61,8 +61,6 @@ map<EntitySpecific, SpriteInfo> spriteMapping = {
     }},
 };
 
-
-
 EntityView::EntityView(Entity* entity) {
     this->entity = entity;
     frame = 0;
@@ -72,38 +70,36 @@ EntityView::EntityView(Entity* entity) {
 }
 
 EntityView::~EntityView() {
+    UnloadTexture(texture);
 }
 
 void EntityView::draw(int vx, int vy, int vdx, int vdy, int vw, int vh) {
     EntityFacing facing = entity->getFacing();
 
-    int animationDelay = 20;
+    int animationDelay = 5;
     ActionInfo action = spriteInfo.actions[entity->getAction()];
-    int numFrames = spriteInfo.numFrames;
     int numActionFrames = action.actionFrames;
 
-    if (entity->isMoving()) {
-		delay--;
+    if (entity->isMoving() || entity->isFalling()) {
+        delay--;
 
-		if (delay == 0) {
-			frame = (frame + 1) % numFrames;
-			delay = animationDelay;
-		}
-	}
-	else {
-		frame = 0;
-		delay = animationDelay;
-	}
+        if (delay <= 0) {
+            frame = (frame + 1) % numActionFrames;
+            delay = animationDelay;
+        }
+    } else frame = 0; // Reset to the first frame if not moving
+    
 
-    float frameWidth = texture.width / numFrames;
-	int row = action.row;
-	Rectangle frameRec = { frame * frameWidth, row * frameWidth, frameWidth, frameWidth };
+    float frameWidth = texture.width / spriteInfo.numFrames;
+    int row = action.row;
+    Rectangle frameRec = { frame * frameWidth, row * frameWidth, frameWidth, frameWidth };
 
-	float x = (entity->getX() - vx) + vdx;
-	float y = (entity->getY() - vy) + vdy;
+    float x = (entity->getX() - vx) + vdx;
+    float y = (entity->getY() - vy) + vdy;
 
-	DrawTextureRec(texture, frameRec, {x, y}, WHITE);
-
+    if (facing == LEFT) frameRec.width *= -1; // Flip the frame horizontally
+    
+    DrawTextureRec(texture, frameRec, {x, y}, WHITE);
 }
 
 bool EntityView::isViewFor(Entity* entity) {

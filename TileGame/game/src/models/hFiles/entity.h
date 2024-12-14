@@ -18,11 +18,10 @@ enum EntitySpecific {
     FIGHTER,
     SHINOBI,
     SAMURAI,
-    WALL,
-    ROCK,
-    FLOOR,
-    CEILING,
     SKELE,
+    FLOOR,
+    PLATFORM,
+    WALL
 };
 
 enum EntityFacing {

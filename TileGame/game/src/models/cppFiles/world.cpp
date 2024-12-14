@@ -2,6 +2,8 @@
 #include "pubsub.h"
 #include "world.h"
 #include "playerEntity.h"
+#include "tile.h"
+#include <vector>
 
 
 World::World() {
@@ -20,13 +22,22 @@ void World::addEntity(Entity* entity) {
     entities.push_back(entity);
 }
 
+void World::addTile(Tile* tile) {
+	tiles.push_back(tile);
+}
+
 void World::addPlayer(Entity* entity) {
     addEntity(entity);
     player = entity;
 }
 
+
 Entity* World::getPlayer() {
     return player;
+}
+
+vector<Tile*> World::getTiles() {
+	return tiles;
 }
 
 void World::tick() {
@@ -36,17 +47,16 @@ void World::tick() {
 	collisions.clear();
 	for (Entity* entity : entities) {
 		if (entity->isMoving() || entity->isFalling()) {
-			for (Entity* entity2 : entities) {
+			for (Entity* entity2 : entities) 
 				if (entity != entity2) checkCollision(entity, entity2);
-			}
 		}
 	}
 
 	// Handle collisions
 	deletions.clear();
-	for (Entity* entity : collisions) {
+	for (Entity* entity : collisions) 
 		if (entity->handleCollisions()) deletions.push_back(entity);
-	}
+	
 
 	// Remove deleted entities
 	for (Entity* entity : deletions) {
